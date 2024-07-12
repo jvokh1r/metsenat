@@ -1,0 +1,40 @@
+{% extends 'dashboard/base.html' %}
+{% block content %}
+<br>
+<div>
+    <button style='margin-right:16px'>
+        Filter
+    </button>
+    <a href="{% url 'add_university' %}"><button style='margin-right:16px'>
+        Add university
+    </button></a>
+</div>
+
+    <br>
+    <h1>Universities</h1>
+
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">NAME</th>
+            <th scope="col">DELETE</th>
+            <th scope="col">EDIT</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for uni in universities %}
+        <tr>
+            <th scope="row">{{ uni.id }}</th>
+            <td>{{ uni.name }}</td>
+            <td><a href="{% url 'delete_university' pk=uni.pk %}">
+                <button>Delete</button>
+            </a></td>
+            <td><a href="{% url 'update_university' pk=uni.pk %}">
+                <button>Edit</button>
+            </a></td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% endblock %}

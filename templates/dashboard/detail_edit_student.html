@@ -1,0 +1,46 @@
+{% extends 'dashboard/base.html' %}
+{% block content %}
+
+<div style="margin: 100px;">
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="btn btn-primary" type="submit">Tahrirlash</button>
+    </form>
+</div>
+
+<div style="margin: 100px;">
+    <a href="{% url 'add_sponsors' pk=student.pk  %}">
+        <button>
+            Add sponsor
+        </button>
+    </a>
+</div>
+
+<table class="table table-bordered">
+    <thead>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">F.I.SH.</th>
+        <th scope="col">AJRATILGAN SUMMA</th>
+        <th scope="col">DELETE</th>
+        <th scope="col">EDIT</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for sponsor_st in sponsor_students %}
+    <tr>
+        <th scope="row">{{ sponsor_st.id }}</th>
+        <td>{{ sponsor_st.sponsor }}</td>
+        <td>{{ sponsor_st.amount }}</td>
+        <td><a href="{% url 'delete_sponsor_student' pk=sponsor_st.pk %}">
+            <button name="delete">Delete</button>
+        </a></td>
+        <td><a href="{% url 'update_sponsor_student' pk=sponsor_st.pk %}">
+            <button>Edit</button>
+        </a></td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

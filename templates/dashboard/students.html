@@ -1,0 +1,46 @@
+{% extends 'dashboard/base.html' %}
+{% block content %}
+<br>
+<div>
+    <button style='margin-right:16px'>
+        Filter
+    </button>
+    <a href="{% url 'add_students' %}"><button style='margin-right:16px'>
+        Add student
+    </button></a>
+</div>
+
+    <br>
+    <h1>Students</h1>
+
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">F.I.SH.</th>
+            <th scope="col">DARAJA</th>
+            <th scope="col">UNIVERSITET</th>
+            <th scope="col">AJRATILGAN SUMMA</th>
+            <th scope="col">KONTRAKT</th>
+            <th scope="col">DELETE</th>
+            <th scope="col">VIEW</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for student in object_list %}
+        <tr>
+            <th scope="row">{{ student.id }}</th>
+            <td>{{ student.full_name }}</td>
+            <td>{{ student.get_level_display }}</td>
+            <td>{{ student.university }}</td>
+            <td>{{ student.sponsored_amount }} UZS</td>
+            <td>{{ student.contract }} UZS</td>
+            <td><a href="{% url 'delete_students' pk=student.pk %}">
+                <button>Delete</button>
+            </a></td>
+            <td><a href="{% url 'update_detail_students' pk=student.pk %}"><button>View</button></a></td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% endblock %}

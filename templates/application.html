@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Metsenat</title>
+</head>
+<body>
+<div>
+</div>
+<div style="display: flex; justify-content: center; align-items: center;">
+    <div>
+        <h1>Homiy sifatida ariza topshirish</h1>
+        {% if messages %}
+        {% for message in messages %}
+        <div style="color: {% if message.level == 25 %}green{% else %}red{% endif %}" role="alert">
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
+        <form action="{% url 'home' %}" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            {% if form.type == 1 %}
+            <input type="text">
+            {% endif %}
+            <button type="submit">Yuborish</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,91 @@
+{% extends 'dashboard/base.html' %}
+{% block content %}
+<br>
+<div>
+    <!-- Button trigger modal -->
+    <button type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+        Filter
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+         aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Sponsorlarni filterlash</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="{% url 'sponsors' %}">
+                    {% csrf_token %}
+                    <div class="modal-body">
+                        <!--                    filter(ariza holati)-->
+                        <select class="form-select" aria-label="Default select example" name="filter_sponsors">
+                            <option selected>Ariza Holati</option>
+                            <option value="yangi">Yangi</option>
+                            <option value="moderatsiyada">Moderatsiyada</option>
+                            <option value="tasdiqlangan">Tasdiqlangan</option>
+                            <option value="bekor qilingan">Bekor qilingan</option>
+                        </select>
+                        <!--                    filter(summa)-->
+                        <br>
+                        <select class="form-select" aria-label="Default select example" name="filter_amount">
+                            <option selected>Homiylik Summasi</option>
+                            <option value="1 000 000">1 000 000 UZS</option>
+                            <option value="5 000 000">5 000 000 UZS</option>
+                            <option value="7 000 000">7 000 000 UZS</option>
+                            <option value="10 000 000">10 000 000 UZS</option>
+                            <option value="30 000 000">30 000 000 UZS</option>
+                            <option value="50 000 000">50 000 000 UZS</option>
+                        </select>
+                        <br>
+                        <p>Dan: <input type="date" name="from" placeholder="From..."></p>
+                        <br>
+                        <p>Gacha: <input type="date" name="to" placeholder="To..."></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-secondary" data-bs-dismiss="modal">Chiqish</button>
+                        <button type="submit" class="btn btn-primary">Natijani korish</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br>
+<h1>Sponsors</h1>
+
+<table class="table table-bordered">
+    <thead>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">F.I.SH.</th>
+        <th scope="col">TEL RAQAMI</th>
+        <th scope="col">HOMIYLIK SUMMASI</th>
+        <th scope="col">SARFLANGAN SUMMA</th>
+        <th scope="col">SANA</th>
+        <th scope="col">HOLATI</th>
+        <th scope="col">DELETE</th>
+        <th scope="col">VIEW</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for sponsor in sponsors %}
+    <tr>
+        <th scope="row">{{ sponsor.id }}</th>
+        <td>{{ sponsor.full_name }}</td>
+        <td>{{ sponsor.phone_number }}</td>
+        <td>{{ sponsor.amount }} UZS</td>
+        <td>{{ sponsor.spend_amount }} UZS</td>
+        <td>{{ sponsor.created_at }}</td>
+        <td>{{ sponsor.get_status_display }}</td>
+        <td><a href="{% url 'delete_sponsors' pk=sponsor.pk %}">
+            <button name="delete">Delete</button>
+        </a></td>
+        <td><a href="{% url 'update_detail_sponsors' pk=sponsor.pk %}"><button>View</button></a></td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
